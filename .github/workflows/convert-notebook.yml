@@ -1,0 +1,33 @@
+name: Convert Notebook to HTML
+
+on:
+  push:
+    branches:
+      - main  
+
+jobs:
+  convert:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v3
+      with:
+        python-version: '3.9'
+
+    - name: Install dependencies
+      run: |
+        pip install nbconvert
+
+    - name: Convert Jupyter Notebook to HTML
+      run: |
+        jupyter nbconvert --to html ES335_pre_req_Darpana_23110085.ipynb
+
+    - name: Upload HTML file
+      uses: actions/upload-artifact@v3
+      with:
+        name: html-files
+        path: ES335_pre_req_Darpana_23110085.html
